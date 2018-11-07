@@ -61,17 +61,31 @@ int main()
     currentTime = time(NULL);
 
     /* Send local time on stream 0 (local time stream) */
-    snprintf( buffer, MAX_BUFFER, "%s\n", ctime(&currentTime) );
+    //snprintf( buffer, MAX_BUFFER, "%s\n", ctime(&currentTime) );
+    
+    FILE *f;
+    f = fopen("sctpclnt.c","r");
+    fread(buffer, sizeof(char),MAX_BUFFER,f);
+    fclose(f);
+
     ret = sctp_sendmsg( connSock, (void *)buffer, (size_t)strlen(buffer),
                          NULL, 0, 0, 0, LOCALTIME_STREAM, 0, 0 );
 
     /* Send GMT on stream 1 (GMT stream) */
-    snprintf( buffer, MAX_BUFFER, "%s\n", asctime( gmtime( &currentTime ) ) );
+    //snprintf( buffer, MAX_BUFFER, "%s\n", asctime( gmtime( &currentTime ) ) );
+    memset(buffer, 0, sizeof buffer);
+    f = fopen("sctpsrvr.c","r");
+    fread(buffer, sizeof(char),MAX_BUFFER,f);
+    fclose(f);
+
     ret = sctp_sendmsg( connSock, (void *)buffer, (size_t)strlen(buffer),
                          NULL, 0, 0, 0, GMT_STREAM, 0, 0 );
 
     /* Close the client connection */
     close( connSock );
+
+    //clear buffer
+    memset(buffer, 0, sizeof buffer);
 
   }
 

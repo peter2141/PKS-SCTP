@@ -74,9 +74,9 @@ int main()
     if (in > 0) {
       buffer[in] = 0;
       if (sndrcvinfo.sinfo_stream == LOCALTIME_STREAM) {
-        printf("(Local) %s\n", buffer);
+        printf("sctpclnt.c \n%s\n", buffer);
       } else if (sndrcvinfo.sinfo_stream == GMT_STREAM) {
-        printf("(GMT  ) %s\n", buffer);
+        printf("sctpsrvr.c \n%s\n", buffer);
       }
     }
 

@@ -1,5 +1,5 @@
 
-#define MAX_BUFFER	1024
+#define MAX_BUFFER	4096
 
 #define MY_PORT_NUM	19000
 

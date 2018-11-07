@@ -71,6 +71,7 @@ int main()
     in = sctp_recvmsg( connSock, (void *)buffer, sizeof(buffer),
                         (struct sockaddr *)NULL, 0, &sndrcvinfo, &flags );
 
+    /*
     if (in > 0) {
       buffer[in] = 0;
       if (sndrcvinfo.sinfo_stream == LOCALTIME_STREAM) {
@@ -78,6 +79,13 @@ int main()
       } else if (sndrcvinfo.sinfo_stream == GMT_STREAM) {
         printf("sctpsrvr.c \n%s\n", buffer);
       }
+    }*/
+
+    if (in > 0) {
+      buffer[in] = 0;
+      if (sndrcvinfo.sinfo_stream == CODE_STREAM) {
+        printf("\n%s\n", buffer);
+      } 
     }
 
   }

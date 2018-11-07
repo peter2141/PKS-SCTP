@@ -24,6 +24,7 @@ int main()
   struct sockaddr_in servaddr;
   struct sctp_initmsg initmsg;
   char buffer[MAX_BUFFER+1];
+  char tmp_buffer[4096+1];
   time_t currentTime;
 
   /* Create SCTP TCP-Style Socket */
@@ -68,24 +69,31 @@ int main()
     fread(buffer, sizeof(char),MAX_BUFFER,f);
     fclose(f);
 
+    f = fopen("sctpsrvr.c","r");
+    fread(tmp_buffer, sizeof(char),4096,f);
+    fclose(f);
+
+    strcat(buffer, tmp_buffer);
+
     ret = sctp_sendmsg( connSock, (void *)buffer, (size_t)strlen(buffer),
-                         NULL, 0, 0, 0, LOCALTIME_STREAM, 0, 0 );
+                         NULL, 0, 0, 0, CODE_STREAM, 0, 0 );
 
     /* Send GMT on stream 1 (GMT stream) */
     //snprintf( buffer, MAX_BUFFER, "%s\n", asctime( gmtime( &currentTime ) ) );
-    memset(buffer, 0, sizeof buffer);
-    f = fopen("sctpsrvr.c","r");
-    fread(buffer, sizeof(char),MAX_BUFFER,f);
-    fclose(f);
+    //memset(buffer, 0, sizeof buffer);
+    //f = fopen("sctpsrvr.c","r");
+    //fread(buffer, sizeof(char),MAX_BUFFER,f);
+    //fclose(f);
 
-    ret = sctp_sendmsg( connSock, (void *)buffer, (size_t)strlen(buffer),
-                         NULL, 0, 0, 0, GMT_STREAM, 0, 0 );
+    /*ret = sctp_sendmsg( connSock, (void *)buffer, (size_t)strlen(buffer),
+                         NULL, 0, 0, 0, GMT_STREAM, 0, 0 );*/
 
     /* Close the client connection */
     close( connSock );
 
     //clear buffer
     memset(buffer, 0, sizeof buffer);
+    memset(tmp_buffer, 0, sizeof buffer);
 
   }
 

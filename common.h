@@ -1,8 +1,9 @@
 
-#define MAX_BUFFER	4096
+#define MAX_BUFFER	8192
 
 #define MY_PORT_NUM	19000
 
 #define LOCALTIME_STREAM	0
 #define GMT_STREAM		1
 
+#define CODE_STREAM 2

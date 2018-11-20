@@ -66,26 +66,18 @@ int main()
 
   /* Expect two messages from the peer */
 
-  for (i = 0 ; i < 2 ; i++) {
+  for (i = 0 ; i < 4 ; i++) {
 
     in = sctp_recvmsg( connSock, (void *)buffer, sizeof(buffer),
                         (struct sockaddr *)NULL, 0, &sndrcvinfo, &flags );
 
-    /*
     if (in > 0) {
       buffer[in] = 0;
       if (sndrcvinfo.sinfo_stream == LOCALTIME_STREAM) {
-        printf("sctpclnt.c \n%s\n", buffer);
-      } else if (sndrcvinfo.sinfo_stream == GMT_STREAM) {
-        printf("sctpsrvr.c \n%s\n", buffer);
-      }
-    }*/
-
-    if (in > 0) {
-      buffer[in] = 0;
-      if (sndrcvinfo.sinfo_stream == CODE_STREAM) {
         printf("\n%s\n", buffer);
-      } 
+      } else if (sndrcvinfo.sinfo_stream == GMT_STREAM) {
+        printf("\n%s\n", buffer);
+      }
     }
 
   }
